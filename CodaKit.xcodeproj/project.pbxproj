@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		BBA712AB1802A016001A3153 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA712AA1802A016001A3153 /* Cocoa.framework */; };
 		BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBA712B31802A016001A3153 /* InfoPlist.strings */; };
+		BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA712BD1802A03E001A3153 /* CodaKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BBA712A71802A016001A3153 /* CodaKit.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodaKit.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBA712A71802A016001A3153 /* CodaKit.codaplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodaKit.codaplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA712AA1802A016001A3153 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BBA712AD1802A016001A3153 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BBA712AE1802A016001A3153 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -20,6 +21,9 @@
 		BBA712B21802A016001A3153 /* CodaKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CodaKit-Info.plist"; sourceTree = "<group>"; };
 		BBA712B41802A016001A3153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BBA712B61802A016001A3153 /* CodaKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CodaKit-Prefix.pch"; sourceTree = "<group>"; };
+		BBA712BC1802A03E001A3153 /* CodaKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodaKit.h; sourceTree = "<group>"; };
+		BBA712BD1802A03E001A3153 /* CodaKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodaKit.m; sourceTree = "<group>"; };
+		BBA712BF1802A060001A3153 /* CodaPlugInsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodaPlugInsController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +50,7 @@
 		BBA712A81802A016001A3153 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BBA712A71802A016001A3153 /* CodaKit.bundle */,
+				BBA712A71802A016001A3153 /* CodaKit.codaplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +77,9 @@
 		BBA712B01802A016001A3153 /* CodaKit */ = {
 			isa = PBXGroup;
 			children = (
+				BBA712BC1802A03E001A3153 /* CodaKit.h */,
+				BBA712BD1802A03E001A3153 /* CodaKit.m */,
+				BBA712BF1802A060001A3153 /* CodaPlugInsController.h */,
 				BBA712B11802A016001A3153 /* Supporting Files */,
 			);
 			path = CodaKit;
@@ -105,7 +112,7 @@
 			);
 			name = CodaKit;
 			productName = CodaKit;
-			productReference = BBA712A71802A016001A3153 /* CodaKit.bundle */;
+			productReference = BBA712A71802A016001A3153 /* CodaKit.codaplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -150,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +206,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -230,7 +238,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -242,9 +250,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CodaKit/CodaKit-Prefix.pch";
 				INFOPLIST_FILE = "CodaKit/CodaKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Coda 2/Plug-Ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = codaplugin;
 			};
 			name = Debug;
 		};
@@ -255,9 +263,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CodaKit/CodaKit-Prefix.pch";
 				INFOPLIST_FILE = "CodaKit/CodaKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Coda 2/Plug-Ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = codaplugin;
 			};
 			name = Release;
 		};
@@ -280,6 +288,7 @@
 				BBA712BB1802A016001A3153 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
