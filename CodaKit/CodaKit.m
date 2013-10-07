@@ -12,7 +12,6 @@
 -(id)initWithController:(CodaPlugInsController *)inController;
 @end
 
-
 @class CodaPlugInsController;
 @implementation CodaKit
 
