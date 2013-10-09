@@ -94,6 +94,7 @@
 			NSRange savedRange = [tv selectedRange];
 			[tv insertText:[selectedText lowercaseString]];
 			[tv setSelectedRange:savedRange];
+
 		}
 	}
 }
@@ -108,7 +109,7 @@
 		NSString *selectedText = [tv selectedText];
 		
 		if(selectedText){
-			[tv insertText:[NSString stringWithFormat:@"<%@>%@</%@>", tagName, selectedText, tagName]];
+			[tv replaceCharactersInRange:tv.selectedRange withString:[NSString stringWithFormat:@"<%@>%@</%@>", tagName, selectedText, tagName]];
 		}
 	}
 }
@@ -125,12 +126,18 @@
             [tv insertText:@""];
 		}
         else {
+            
             long start, end;
             NSRange range = [tv rangeOfCurrentLine];
             
-            if([tv currentLineNumber] == 1){
+            if(tv.currentLineNumber == 1)
+            {
                 start = range.location;
                 end = range.length;
+                
+                if([tv.string isNotEqualTo:[tv stringWithRange:tv.rangeOfCurrentLine]]){
+                    end += 1;
+                }
             }
             else {
                 start = range.location - 1;
