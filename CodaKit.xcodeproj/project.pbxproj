@@ -10,6 +10,7 @@
 		BBA712AB1802A016001A3153 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA712AA1802A016001A3153 /* Cocoa.framework */; };
 		BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBA712B31802A016001A3153 /* InfoPlist.strings */; };
 		BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA712BD1802A03E001A3153 /* CodaKit.m */; };
+		BBF422CC18057877006A4474 /* CodaKit.codaplugin in Resources */ = {isa = PBXBuildFile; fileRef = BBF422CB18057877006A4474 /* CodaKit.codaplugin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		BBA712BC1802A03E001A3153 /* CodaKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodaKit.h; sourceTree = "<group>"; };
 		BBA712BD1802A03E001A3153 /* CodaKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodaKit.m; sourceTree = "<group>"; };
 		BBA712BF1802A060001A3153 /* CodaPlugInsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodaPlugInsController.h; sourceTree = "<group>"; };
+		BBF422CB18057877006A4474 /* CodaKit.codaplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CodaKit.codaplugin; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 				BBA712B01802A016001A3153 /* CodaKit */,
 				BBA712A91802A016001A3153 /* Frameworks */,
 				BBA712A81802A016001A3153 /* Products */,
+				BBF422CA18057877006A4474 /* Plugin */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,6 +96,14 @@
 				BBA712B61802A016001A3153 /* CodaKit-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BBF422CA18057877006A4474 /* Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				BBF422CB18057877006A4474 /* CodaKit.codaplugin */,
+			);
+			path = Plugin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */,
+				BBF422CC18057877006A4474 /* CodaKit.codaplugin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
