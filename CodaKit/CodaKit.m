@@ -38,10 +38,12 @@
         
         [controller registerActionWithTitle:@"Delete Selection / Line" target:self selector:@selector(deleteSelection:)];
         [controller registerActionWithTitle:@"Duplicate Selection / Line" target:self selector:@selector(duplicateSelection:)];
+        [controller registerActionWithTitle:@"Line Break" target:self selector:@selector(newLine:)];
         
         [controller registerActionWithTitle:@"—" target:self selector:nil];
         
         NSString *groupName = @"Wrap Selection With...";
+        
         [controller registerActionWithTitle:@"h1" underSubmenuWithTitle:groupName target:self selector:@selector(wrapWithTag:) representedObject:@"h1" keyEquivalent:@"^1" pluginName:nil];
         [controller registerActionWithTitle:@"h2" underSubmenuWithTitle:groupName target:self selector:@selector(wrapWithTag:) representedObject:@"h2" keyEquivalent:@"^2" pluginName:nil];
         [controller registerActionWithTitle:@"h3" underSubmenuWithTitle:groupName target:self selector:@selector(wrapWithTag:) representedObject:@"h3" keyEquivalent:@"^3" pluginName:nil];
@@ -169,6 +171,15 @@
             [tv setSelectedRange:NSMakeRange(tv.rangeOfCurrentLine.location+tv.rangeOfCurrentLine.length, 0)];
             [tv insertText:[NSString stringWithFormat:@"\n%@", lineContent]];
         }
+	}
+}
+
+-(void)newLine:(id)sender
+{
+	CodaTextView *tv = [controller focusedTextView:self];
+    
+	if(tv){
+		[tv insertText:@"<br />"];
 	}
 }
 
