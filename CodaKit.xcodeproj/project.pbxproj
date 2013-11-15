@@ -256,8 +256,7 @@
 		BBA712BA1802A016001A3153 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEPLOYMENT_LOCATION = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CodaKit/CodaKit-Prefix.pch";
@@ -271,8 +270,7 @@
 		BBA712BB1802A016001A3153 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEPLOYMENT_LOCATION = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CodaKit/CodaKit-Prefix.pch";

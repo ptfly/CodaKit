@@ -34,7 +34,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "YES"
+      useCustomWorkingDirectory = "NO"
       customWorkingDirectory = "/Users/peerless/Library/Application Support/Coda 2/Plug-ins"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
