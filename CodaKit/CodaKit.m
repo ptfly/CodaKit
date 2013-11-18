@@ -183,4 +183,22 @@
 	}
 }
 
+-(BOOL)validateMenuItem:(NSMenuItem*)aMenuItem
+{
+	BOOL result = YES;
+    
+	if([controller focusedTextView:self] == nil){
+        result = NO;
+    }
+    else {
+        if([aMenuItem action] == @selector(toUpperCase:) || [aMenuItem action] == @selector(toLowerCase:) || [aMenuItem action] == @selector(wrapWithTag:))
+        {
+            if([[controller focusedTextView:self] selectedText] == nil || [[[controller focusedTextView:self] selectedText] isEqualToString:@""]){
+                result = NO;
+            }
+        }
+    }
+	
+	return result;
+}
 @end
