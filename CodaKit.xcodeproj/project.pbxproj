@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F89B609B71241E992C0576D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EFAE6C2A1545BFADF7C1D1 /* libPods.a */; };
+		BB8C811E18B79F2500572532 /* DebugPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8C811D18B79F2500572532 /* DebugPrint.m */; };
+		BB8C812018B7A01600572532 /* DebugPrint.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB8C811F18B7A01600572532 /* DebugPrint.xib */; };
 		BBA712AB1802A016001A3153 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA712AA1802A016001A3153 /* Cocoa.framework */; };
 		BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBA712B31802A016001A3153 /* InfoPlist.strings */; };
 		BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA712BD1802A03E001A3153 /* CodaKit.m */; };
@@ -14,6 +17,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77EFAE6C2A1545BFADF7C1D1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFAE2451D7D64B028EBD293A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		BB8C811C18B79F2500572532 /* DebugPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrint.h; sourceTree = "<group>"; };
+		BB8C811D18B79F2500572532 /* DebugPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPrint.m; sourceTree = "<group>"; };
+		BB8C811F18B7A01600572532 /* DebugPrint.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPrint.xib; sourceTree = "<group>"; };
 		BBA712A71802A016001A3153 /* CodaKit.codaplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodaKit.codaplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA712AA1802A016001A3153 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BBA712AD1802A016001A3153 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -34,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBA712AB1802A016001A3153 /* Cocoa.framework in Frameworks */,
+				4F89B609B71241E992C0576D /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +56,7 @@
 				BBA712A91802A016001A3153 /* Frameworks */,
 				BBA712A81802A016001A3153 /* Products */,
 				BBF422CA18057877006A4474 /* Plugin */,
+				AFAE2451D7D64B028EBD293A /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,6 +73,7 @@
 			children = (
 				BBA712AA1802A016001A3153 /* Cocoa.framework */,
 				BBA712AC1802A016001A3153 /* Other Frameworks */,
+				77EFAE6C2A1545BFADF7C1D1 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -84,6 +95,9 @@
 				BBA712BD1802A03E001A3153 /* CodaKit.m */,
 				BBA712BF1802A060001A3153 /* CodaPlugInsController.h */,
 				BBA712B11802A016001A3153 /* Supporting Files */,
+				BB8C811C18B79F2500572532 /* DebugPrint.h */,
+				BB8C811D18B79F2500572532 /* DebugPrint.m */,
+				BB8C811F18B7A01600572532 /* DebugPrint.xib */,
 			);
 			path = CodaKit;
 			sourceTree = "<group>";
@@ -113,9 +127,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBA712B91802A016001A3153 /* Build configuration list for PBXNativeTarget "CodaKit" */;
 			buildPhases = (
+				4D91454776F24722BD02EB01 /* Check Pods Manifest.lock */,
 				BBA712A31802A016001A3153 /* Sources */,
 				BBA712A41802A016001A3153 /* Frameworks */,
 				BBA712A51802A016001A3153 /* Resources */,
+				FAE3B8842FF24FE399A4AB99 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -159,16 +175,49 @@
 			files = (
 				BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */,
 				BBF422CC18057877006A4474 /* CodaKit.codaplugin in Resources */,
+				BB8C812018B7A01600572532 /* DebugPrint.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D91454776F24722BD02EB01 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+		FAE3B8842FF24FE399A4AB99 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BBA712A31802A016001A3153 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB8C811E18B79F2500572532 /* DebugPrint.m in Sources */,
 				BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,28 +304,34 @@
 		};
 		BBA712BA1802A016001A3153 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFAE2451D7D64B028EBD293A /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CodaKit/CodaKit-Prefix.pch";
 				INFOPLIST_FILE = "CodaKit/CodaKit-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Coda 2/Plug-ins/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = codaplugin;
 			};
 			name = Debug;
 		};
 		BBA712BB1802A016001A3153 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFAE2451D7D64B028EBD293A /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CodaKit/CodaKit-Prefix.pch";
 				INFOPLIST_FILE = "CodaKit/CodaKit-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Coda 2/Plug-ins/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = codaplugin;
 			};
 			name = Release;

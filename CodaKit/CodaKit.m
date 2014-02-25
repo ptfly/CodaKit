@@ -31,8 +31,13 @@
 {
 	if((self = [super init]) != nil)
 	{
+        //debug = [[DebugPrint alloc] init];
 		controller = inController;
         
+//		[controller registerActionWithTitle:@"Suggest Completion" target:self selector:@selector(autoComplete:)];
+//        [controller registerActionWithTitle:@"—" target:self selector:nil];
+        
+        [controller registerActionWithTitle:@"Flip Quotes" target:self selector:@selector(quoteFixer:)];
 		[controller registerActionWithTitle:@"Capitalize Selection" target:self selector:@selector(toUpperCase:)];
 		[controller registerActionWithTitle:@"Uncapitalize Selection" target:self selector:@selector(toLowerCase:)];
         
@@ -66,6 +71,83 @@
 	return @"CodaKit";
 }
 
+-(void)autoComplete:(id)sender
+{
+    CodaTextView *tv = [controller focusedTextView:self];
+	
+    if(tv)
+	{
+        NSRange range   = [tv previousWordRange];
+//        NSNumber *start = [NSNumber numberWithLong:range.location];
+        NSNumber *end   = [NSNumber numberWithLong:range.location+range.length];
+        NSNumber *bTrue = [NSNumber numberWithBool:YES];
+        
+        NSLog(@"Word: %@", [tv stringWithRange:range]);
+        [self ternJS:@{@"query":@{@"type": @"completions", @"file":[tv path], @"end":end, @"types":bTrue}}];
+    }
+}
+
+-(void)ternJS:(NSDictionary *)params
+{
+    NSError *error;
+    NSData *outputData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
+    
+    if(!outputData){
+        NSLog(@"JSON ERROR: %@", error);
+    }
+    else {
+        
+        NSURL *URL = [NSURL URLWithString:@"http://127.0.0.1:54782"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:outputData];
+        
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        operation.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+        {
+            NSMenu *theMenu = [[NSMenu alloc] init];
+           
+            [[responseObject objectForKey:@"completions"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+            {
+                NSMenuItem *item = [[NSMenuItem alloc] init];
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[obj objectForKey:@"name"]];
+                
+                [item setAttributedTitle:attrString];
+                [item setAction:@selector(insertSuggestion:)];
+                [item setTarget:self];
+                [item setRepresentedObject:obj];
+                
+                [theMenu insertItem:item atIndex:(unsigned long)idx];
+            }];
+            
+            CodaTextView *tv = [controller focusedTextView:self];
+            
+            NSPoint myPoint = [tv.window.contentView convertPoint:[tv.window convertScreenToBase:[NSEvent mouseLocation]] fromView:nil];
+            
+            NSEvent *fakeMouseEvent = [NSEvent mouseEventWithType:NSLeftMouseDown location:myPoint modifierFlags:0 timestamp:0 windowNumber:[tv.window windowNumber] context:nil eventNumber:0 clickCount:0 pressure:0];
+            
+            [NSMenu popUpContextMenu:theMenu withEvent:fakeMouseEvent forView:nil];
+        
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            NSLog(@"ERROR %@", [error localizedDescription]);
+        }];
+        
+        [operation start];
+    }
+}
+
+-(void)insertSuggestion:(id)sender
+{
+    CodaTextView *tv = [controller focusedTextView:self];
+    
+	if(tv){
+        NSDictionary *info = (NSDictionary *)[sender representedObject];
+        [tv replaceCharactersInRange:[tv previousWordRange] withString:[info objectForKey:@"name"]];
+    }
+}
+
 -(void)toUpperCase:(id)sender
 {
 	CodaTextView *tv = [controller focusedTextView:self];
@@ -97,6 +179,26 @@
 			[tv insertText:[selectedText lowercaseString]];
 			[tv setSelectedRange:savedRange];
 
+		}
+	}
+}
+
+-(void)quoteFixer:(id)sender
+{
+	CodaTextView *tv = [controller focusedTextView:self];
+	
+    if(tv)
+	{
+		NSString *selectedText = [tv selectedText];
+		
+		if(selectedText)
+        {
+            selectedText = [selectedText stringByReplacingOccurrencesOfString:@"'" withString:@"{{PT.SQ}}"];
+            selectedText = [selectedText stringByReplacingOccurrencesOfString:@"\"" withString:@"{{PT.DQ}}"];
+            selectedText = [selectedText stringByReplacingOccurrencesOfString:@"{{PT.SQ}}" withString:@"\""];
+            selectedText = [selectedText stringByReplacingOccurrencesOfString:@"{{PT.DQ}}" withString:@"'"];
+            
+            [tv replaceCharactersInRange:[tv selectedRange] withString:selectedText];
 		}
 	}
 }
@@ -183,7 +285,7 @@
 	}
 }
 
--(BOOL)validateMenuItem:(NSMenuItem*)aMenuItem
+-(BOOL)validateMenuItem:(NSMenuItem *)aMenuItem
 {
 	BOOL result = YES;
     
@@ -201,4 +303,5 @@
 	
 	return result;
 }
+
 @end
