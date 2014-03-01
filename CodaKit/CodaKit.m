@@ -31,13 +31,16 @@
 {
 	if((self = [super init]) != nil)
 	{
-        //debug = [[DebugPrint alloc] init];
+        [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+        
+        debug = [[DebugPrint alloc] init];
 		controller = inController;
         
 //		[controller registerActionWithTitle:@"Suggest Completion" target:self selector:@selector(autoComplete:)];
 //        [controller registerActionWithTitle:@"—" target:self selector:nil];
         
         [controller registerActionWithTitle:@"Flip Quotes" target:self selector:@selector(quoteFixer:)];
+        [controller registerActionWithTitle:@"Compile DustJS" target:self selector:@selector(compileDustJS:)];
 		[controller registerActionWithTitle:@"Capitalize Selection" target:self selector:@selector(toUpperCase:)];
 		[controller registerActionWithTitle:@"Uncapitalize Selection" target:self selector:@selector(toLowerCase:)];
         
@@ -69,6 +72,56 @@
 -(NSString *)name
 {
 	return @"CodaKit";
+}
+
+-(void)textViewWillSave:(CodaTextView*)textView
+{
+    [self compileDustJS:nil];
+}
+
+-(void)compileDustJS:(id)sender
+{
+    CodaTextView *tv = [controller focusedTextView:self];
+    
+	if(tv)
+	{
+        NSString *dirName  = [[tv path] stringByReplacingOccurrencesOfString:[[tv path] lastPathComponent] withString:@""];
+        NSString *confFile = [NSString stringWithFormat:@"%@%@", dirName, @"dust.conf"];
+        
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:confFile isDirectory:NO];
+        
+        if(fileExists)
+        {
+            NSData *confData = [NSData dataWithContentsOfFile:confFile];
+            NSDictionary *config = [NSJSONSerialization JSONObjectWithData:confData options:0 error:nil];
+            NSString *name = [[[tv path] lastPathComponent] stringByDeletingPathExtension];
+            NSString *compile = [NSString stringWithFormat:@"%@%@.js", [config objectForKey:@"compilePath"], name];
+
+            // Run compiler
+            NSPipe *pipe = [NSPipe pipe];
+            NSTask *task = [[NSTask alloc] init];
+            NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/dustc --name=%@ '%@' '%@'", name, [tv path], compile]];
+
+            [task setLaunchPath: @"/bin/bash"];
+            [task setArguments:args];
+            [task setStandardOutput:pipe];
+            
+//            NSFileHandle *file = [pipe fileHandleForReading];
+            [task launch];
+//
+//            NSString *response = [[NSString alloc] initWithData:[file readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+//            response = (![response isEqualToString:@""] ? response : @"Dust template compiled successfully!");
+//            
+//            NSLog(@"DustJS Compiler: %@", response);
+//            
+//            NSUserNotification *notification = [[NSUserNotification alloc] init];
+//            notification.title = @"DustJS Compiler";
+//            notification.informativeText = response;
+//            notification.soundName = NSUserNotificationDefaultSoundName;
+//            
+//            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+        }
+    }
 }
 
 -(void)autoComplete:(id)sender
@@ -293,7 +346,7 @@
         result = NO;
     }
     else {
-        if([aMenuItem action] == @selector(toUpperCase:) || [aMenuItem action] == @selector(toLowerCase:) || [aMenuItem action] == @selector(wrapWithTag:))
+        if([aMenuItem action] == @selector(quoteFixer:) || [aMenuItem action] == @selector(toUpperCase:) || [aMenuItem action] == @selector(toLowerCase:) || [aMenuItem action] == @selector(wrapWithTag:))
         {
             if([[controller focusedTextView:self] selectedText] == nil || [[[controller focusedTextView:self] selectedText] isEqualToString:@""]){
                 result = NO;

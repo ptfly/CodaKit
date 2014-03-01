@@ -13,7 +13,7 @@
 
 @class CodaPlugInsController;
 
-@interface CodaKit : NSObject <CodaPlugIn>
+@interface CodaKit : NSObject <CodaPlugIn, NSUserNotificationCenterDelegate>
 {
     DebugPrint *debug;
     CodaPlugInsController *controller;
