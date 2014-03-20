@@ -16,3 +16,15 @@ A bunch of commands to speed up your workflow while working with Coda 2.
 
 ####Download####
 Compiled plugin can be found in the <b>Plugin</b> directory.
+
+
+#### LinkedIn DustJS Compiler Notes ###
+- In the site root, create a file dust.config in JSON format
+```js
+{
+	"compileDir":"/_cache", // path where the compiled "JS" file goes
+	"templateDir":"/templates", // main directory where all your templates are stored
+	"compileFilesWithExtension":"dust", // which files (determined by the extension) will be compiled on save
+	"preserveDirectoryStructure":true // mirror the structure of the templates directory to the _cache (in this case)
+}
+```
