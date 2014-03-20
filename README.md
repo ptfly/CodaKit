@@ -3,6 +3,10 @@ CodaKit
 
 A bunch of commands to speed up your workflow while working with Coda 2.
 
+- Compile DustJS template (needs node & dustc installed and two symlinks*)
+- * sudo ln -s /usr/local/bin/node /usr/bin/node
+- * sudo ln -s /usr/local/bin/dustc /usr/bin/dustc
+- Flip Quotes (replace single with double quotes and reverse)
 - Capitalize Selection
 - Uncapitalize Selection
 - Delete Selection / Current Line
