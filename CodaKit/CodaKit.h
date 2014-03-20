@@ -9,13 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 #import "CodaPluginsController.h"
-#import "DebugPrint.h"
 
 @class CodaPlugInsController;
 
-@interface CodaKit : NSObject <CodaPlugIn, NSUserNotificationCenterDelegate>
+@interface CodaKit : NSObject <CodaPlugIn>
 {
-    DebugPrint *debug;
     CodaPlugInsController *controller;
 }
 

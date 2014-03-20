@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4F89B609B71241E992C0576D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EFAE6C2A1545BFADF7C1D1 /* libPods.a */; };
-		BB8C811E18B79F2500572532 /* DebugPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8C811D18B79F2500572532 /* DebugPrint.m */; };
-		BB8C812018B7A01600572532 /* DebugPrint.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB8C811F18B7A01600572532 /* DebugPrint.xib */; };
 		BBA712AB1802A016001A3153 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA712AA1802A016001A3153 /* Cocoa.framework */; };
 		BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBA712B31802A016001A3153 /* InfoPlist.strings */; };
 		BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA712BD1802A03E001A3153 /* CodaKit.m */; };
@@ -19,9 +17,6 @@
 /* Begin PBXFileReference section */
 		77EFAE6C2A1545BFADF7C1D1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFAE2451D7D64B028EBD293A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		BB8C811C18B79F2500572532 /* DebugPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrint.h; sourceTree = "<group>"; };
-		BB8C811D18B79F2500572532 /* DebugPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPrint.m; sourceTree = "<group>"; };
-		BB8C811F18B7A01600572532 /* DebugPrint.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPrint.xib; sourceTree = "<group>"; };
 		BBA712A71802A016001A3153 /* CodaKit.codaplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodaKit.codaplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA712AA1802A016001A3153 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BBA712AD1802A016001A3153 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -95,9 +90,6 @@
 				BBA712BD1802A03E001A3153 /* CodaKit.m */,
 				BBA712BF1802A060001A3153 /* CodaPlugInsController.h */,
 				BBA712B11802A016001A3153 /* Supporting Files */,
-				BB8C811C18B79F2500572532 /* DebugPrint.h */,
-				BB8C811D18B79F2500572532 /* DebugPrint.m */,
-				BB8C811F18B7A01600572532 /* DebugPrint.xib */,
 			);
 			path = CodaKit;
 			sourceTree = "<group>";
@@ -148,7 +140,7 @@
 		BBA7129F1802A016001A3153 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Plamen Todorov";
 			};
 			buildConfigurationList = BBA712A21802A016001A3153 /* Build configuration list for PBXProject "CodaKit" */;
@@ -175,7 +167,6 @@
 			files = (
 				BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */,
 				BBF422CC18057877006A4474 /* CodaKit.codaplugin in Resources */,
-				BB8C812018B7A01600572532 /* DebugPrint.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +208,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB8C811E18B79F2500572532 /* DebugPrint.m in Sources */,
 				BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,7 +296,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AFAE2451D7D64B028EBD293A /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -323,7 +313,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AFAE2451D7D64B028EBD293A /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

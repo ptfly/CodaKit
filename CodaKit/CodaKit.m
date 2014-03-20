@@ -31,9 +31,6 @@
 {
 	if((self = [super init]) != nil)
 	{
-        [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
-        
-        debug = [[DebugPrint alloc] init];
 		controller = inController;
         
 //		[controller registerActionWithTitle:@"Suggest Completion" target:self selector:@selector(autoComplete:)];
@@ -85,41 +82,64 @@
     
 	if(tv)
 	{
-        NSString *dirName  = [[tv path] stringByReplacingOccurrencesOfString:[[tv path] lastPathComponent] withString:@""];
-        NSString *confFile = [NSString stringWithFormat:@"%@%@", dirName, @"dust.conf"];
+        NSString *confFile = [NSString stringWithFormat:@"%@/%@", [tv siteLocalPath], @"dust.conf"];
         
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:confFile isDirectory:NO];
-        
-        if(fileExists)
+        if([[NSFileManager defaultManager] fileExistsAtPath:confFile isDirectory:NO])
         {
             NSData *confData = [NSData dataWithContentsOfFile:confFile];
             NSDictionary *config = [NSJSONSerialization JSONObjectWithData:confData options:0 error:nil];
-            NSString *name = [[[tv path] lastPathComponent] stringByDeletingPathExtension];
-            NSString *compile = [NSString stringWithFormat:@"%@%@.js", [config objectForKey:@"compilePath"], name];
-
+            
+            // Compile files with specific extensions only, defined in the dust.conf file
+            if([[[[tv path] pathExtension] lowercaseString] isEqualToString:[config objectForKey:@"compileFilesWithExtension"]] == NO){
+                return;
+            }
+            
+            NSString *fileName;
+            NSString *compilePath;
+            
+            NSString *compileDir = [NSString stringWithFormat:@"%@%@", [tv siteLocalPath], [config objectForKey:@"compileDir"]];
+            NSString *templateDir = [NSString stringWithFormat:@"%@%@", [tv siteLocalPath], [config objectForKey:@"templateDir"]];
+            
+            if([[config objectForKey:@"preserveDirectoryStructure"] boolValue] == YES)
+            {
+                fileName = [[[tv path] stringByReplacingOccurrencesOfString:templateDir withString:@""] stringByDeletingPathExtension];
+                
+                NSArray *dirs = [[fileName stringByDeletingLastPathComponent] componentsSeparatedByString:@"/"];
+                NSString *path = compileDir;
+                
+                for(uint i=1; i<dirs.count; i++){
+                    path = [path stringByAppendingFormat:@"/%@", [dirs objectAtIndex:i]];
+                    
+                    BOOL isDir = YES;
+                    if([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir] == NO){
+                        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+                    }
+                }
+            }
+            else {
+                fileName = [[[tv path] lastPathComponent] stringByDeletingPathExtension];
+            }
+            
+            compilePath = [NSString stringWithFormat:@"%@%@.js", compileDir, fileName];
+            
             // Run compiler
             NSPipe *pipe = [NSPipe pipe];
             NSTask *task = [[NSTask alloc] init];
-            NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/dustc --name=%@ '%@' '%@'", name, [tv path], compile]];
-
+            NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/dustc --name=%@ '%@' '%@'", fileName, [tv path], compilePath]];
+            
             [task setLaunchPath: @"/bin/bash"];
             [task setArguments:args];
             [task setStandardOutput:pipe];
+            [task setStandardError:pipe];
             
-//            NSFileHandle *file = [pipe fileHandleForReading];
+            NSFileHandle *file = [pipe fileHandleForReading];
             [task launch];
-//
-//            NSString *response = [[NSString alloc] initWithData:[file readDataToEndOfFile] encoding:NSUTF8StringEncoding];
-//            response = (![response isEqualToString:@""] ? response : @"Dust template compiled successfully!");
-//            
-//            NSLog(@"DustJS Compiler: %@", response);
-//            
-//            NSUserNotification *notification = [[NSUserNotification alloc] init];
-//            notification.title = @"DustJS Compiler";
-//            notification.informativeText = response;
-//            notification.soundName = NSUserNotificationDefaultSoundName;
-//            
-//            [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+
+            NSString *response = [[NSString alloc] initWithData:[file readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+            
+            if([response isEqualToString:@""] == NO){
+                [self showError:[NSString stringWithFormat:@"%@\n\n==== RESPONSE ====\n%@", [args lastObject], response] andTitle:@"DustJS Compiler"];
+            }
         }
     }
 }
@@ -355,6 +375,22 @@
     }
 	
 	return result;
+}
+
+-(void)showError:(NSString *)text
+{
+    [self showError:text andTitle:@"CodaKit"];
+}
+
+-(void)showError:(NSString *)text andTitle:(NSString *)title
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    
+    [alert addButtonWithTitle:@"OK"];
+    [alert setMessageText:title];
+    [alert setInformativeText:text];
+    [alert setAlertStyle:NSCriticalAlertStyle];
+    [alert runModal];
 }
 
 @end
