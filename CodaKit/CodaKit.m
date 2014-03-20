@@ -120,7 +120,7 @@
                 fileName = [[[tv path] lastPathComponent] stringByDeletingPathExtension];
             }
             
-            compilePath = [NSString stringWithFormat:@"%@%@.js", compileDir, fileName];
+            compilePath = [NSString stringWithFormat:@"%@/%@.js", compileDir, fileName];
             
             // Run compiler
             NSPipe *pipe = [NSPipe pipe];
