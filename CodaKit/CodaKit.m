@@ -107,12 +107,17 @@
                 NSArray *dirs = [[fileName stringByDeletingLastPathComponent] componentsSeparatedByString:@"/"];
                 NSString *path = compileDir;
                 
-                for(uint i=1; i<dirs.count; i++){
+                for(uint i=0; i<dirs.count; i++){
                     path = [path stringByAppendingFormat:@"/%@", [dirs objectAtIndex:i]];
+                    NSLog(@"%@", path);
                     
                     BOOL isDir = YES;
                     if([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir] == NO){
-                        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:NULL];
+                        NSError *err;
+                        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&err];
+                        if(err){
+                            NSLog(@"%@", err);
+                        }
                     }
                 }
             }
@@ -120,12 +125,13 @@
                 fileName = [[[tv path] lastPathComponent] stringByDeletingPathExtension];
             }
             
-            compilePath = [NSString stringWithFormat:@"%@/%@.js", compileDir, fileName];
+            compilePath = [NSString stringWithFormat:@"%@%@.js", compileDir, fileName];
+            fileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
             
             // Run compiler
             NSPipe *pipe = [NSPipe pipe];
             NSTask *task = [[NSTask alloc] init];
-            NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/dustc --name=%@ '%@' '%@'", fileName, [tv path], compilePath]];
+            NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/dustc --name='%@' '%@' '%@'", fileName, [tv path], compilePath]];
             
             [task setLaunchPath: @"/bin/bash"];
             [task setArguments:args];
