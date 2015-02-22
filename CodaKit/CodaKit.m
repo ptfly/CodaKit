@@ -325,7 +325,7 @@
                 end = range.length;
                 
                 if([tv.string isNotEqualTo:[tv stringWithRange:tv.rangeOfCurrentLine]]){
-                    end += 1;
+                    end += [[tv lineEnding] length];
                 }
             }
             else {
