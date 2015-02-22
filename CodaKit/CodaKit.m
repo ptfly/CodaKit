@@ -162,7 +162,7 @@
 -(void)preferences:(id)sender
 {
     if(!prefController){
-        self.prefController = [[CKPreferences alloc] initWithWindowNibName:@"Preferences"];
+        self.prefController = [[CKPreferences alloc] initWithWindowNibName:@"CKPreferences"];
     }
     
     [prefController.window makeKeyAndOrderFront:nil];
