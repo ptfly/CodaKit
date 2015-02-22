@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AFNetworking/AFNetworking.h>
 #import "CodaPluginsController.h"
+#import "JSHint.h"
 
 @class CodaPlugInsController;
 
-@interface CodaKit : NSObject <CodaPlugIn>
+@interface CodaKit : NSObject <CodaPlugIn, JSHintDelegate>
 {
     CodaPlugInsController *controller;
 }
+
+@property (nonatomic, retain)  JSHint *JSHintPanel;
+@property (nonatomic, retain)  NSWindowController *prefController;
 
 @end

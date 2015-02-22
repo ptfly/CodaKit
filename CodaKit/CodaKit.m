@@ -7,6 +7,10 @@
 //
 
 #import "CodaKit.h"
+#import "CKPreferences.h"
+#import "HTMLBeautifier.h"
+#import "XMLReader.h"
+#import "RegExCategories.h"
 
 @interface CodaKit ()
 -(id)initWithController:(CodaPlugInsController *)inController;
@@ -14,6 +18,8 @@
 
 @class CodaPlugInsController;
 @implementation CodaKit
+
+@synthesize prefController, JSHintPanel;
 
 //2.0 and lower
 -(id)initWithPlugInController:(CodaPlugInsController *)aController bundle:(NSBundle*)aBundle
@@ -33,19 +39,17 @@
 	{
 		controller = inController;
         
-//		[controller registerActionWithTitle:@"Suggest Completion" target:self selector:@selector(autoComplete:)];
-//        [controller registerActionWithTitle:@"—" target:self selector:nil];
+        [controller registerActionWithTitle:@"JSHint" target:self selector:@selector(runJSHint:)];
+        [controller registerActionWithTitle:@"HTML Beautify" underSubmenuWithTitle:nil target:self selector:@selector(runHTMLBeautifier:) representedObject:nil keyEquivalent:@"^~@b" pluginName:nil];
         
+        [controller registerActionWithTitle:@"Line Break" target:self selector:@selector(newLine:)];
         [controller registerActionWithTitle:@"Flip Quotes" target:self selector:@selector(quoteFixer:)];
-        [controller registerActionWithTitle:@"Compile DustJS" target:self selector:@selector(compileDustJS:)];
+        
 		[controller registerActionWithTitle:@"Capitalize Selection" target:self selector:@selector(toUpperCase:)];
 		[controller registerActionWithTitle:@"Uncapitalize Selection" target:self selector:@selector(toLowerCase:)];
         
         [controller registerActionWithTitle:@"Delete Selection / Line" target:self selector:@selector(deleteSelection:)];
         [controller registerActionWithTitle:@"Duplicate Selection / Line" target:self selector:@selector(duplicateSelection:)];
-        [controller registerActionWithTitle:@"Line Break" target:self selector:@selector(newLine:)];
-        
-        [controller registerActionWithTitle:@"—" target:self selector:nil];
         
         NSString *groupName = @"Wrap Selection With...";
         
@@ -61,6 +65,9 @@
         [controller registerActionWithTitle:@"div" underSubmenuWithTitle:groupName target:self selector:@selector(wrapWithTag:) representedObject:@"div" keyEquivalent:@"^d" pluginName:nil];
         [controller registerActionWithTitle:@"span" underSubmenuWithTitle:groupName target:self selector:@selector(wrapWithTag:) representedObject:@"span" keyEquivalent:@"^s" pluginName:nil];
         [controller registerActionWithTitle:@"strong" underSubmenuWithTitle:groupName target:self selector:@selector(wrapWithTag:) representedObject:@"strong" keyEquivalent:@"^b" pluginName:nil];
+        
+        [controller registerActionWithTitle:@"—" target:self selector:nil];
+        [controller registerActionWithTitle:@"Preferences" underSubmenuWithTitle:nil target:self selector:@selector(preferences:) representedObject:nil keyEquivalent:@"^~@p" pluginName:nil];
 	}
     
 	return self;
@@ -109,16 +116,16 @@
                 NSArray *dirs = [[fileName stringByDeletingLastPathComponent] componentsSeparatedByString:@"/"];
                 NSString *path = compileDir;
                 
-                for(uint i=0; i<dirs.count; i++){
+                for(uint i=0; i<dirs.count; i++)
+                {
                     path = [path stringByAppendingFormat:@"/%@", [dirs objectAtIndex:i]];
-                    NSLog(@"%@", path);
                     
                     BOOL isDir = YES;
                     if([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir] == NO){
                         NSError *err;
                         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&err];
                         if(err){
-                            NSLog(@"%@", err);
+                            [self showError:[err localizedDescription] andTitle:@"NSFileManager failed to create directory!"];
                         }
                     }
                 }
@@ -152,80 +159,77 @@
     }
 }
 
--(void)autoComplete:(id)sender
+-(void)preferences:(id)sender
+{
+    if(!prefController){
+        self.prefController = [[CKPreferences alloc] initWithWindowNibName:@"Preferences"];
+    }
+    
+    [prefController.window makeKeyAndOrderFront:nil];
+}
+
+-(void)goToLine:(NSDictionary *)data
 {
     CodaTextView *tv = [controller focusedTextView:self];
-	
-    if(tv)
+    
+    if(tv){
+        [tv goToLine:[[data objectForKey:@"line"] intValue] column:[[data objectForKey:@"char"] intValue]];
+    }
+}
+
+-(void)runJSHint:(id)sender
+{
+    CodaTextView *tv = [controller focusedTextView:self];
+    
+	if(tv)
 	{
-        NSRange range   = [tv previousWordRange];
-//        NSNumber *start = [NSNumber numberWithLong:range.location];
-        NSNumber *end   = [NSNumber numberWithLong:range.location+range.length];
-        NSNumber *bTrue = [NSNumber numberWithBool:YES];
+        if(JSHintPanel){
+            [JSHintPanel setDelegate:nil];
+            [JSHintPanel close];
+            self.JSHintPanel = nil;
+        }
         
-        NSLog(@"Word: %@", [tv stringWithRange:range]);
-        [self ternJS:@{@"query":@{@"type": @"completions", @"file":[tv path], @"end":end, @"types":bTrue}}];
+        JSHintPanel = [[JSHint alloc] initWithFilePath:[tv path]];
+        [JSHintPanel setDelegate:self];
+        [JSHintPanel showResults];
     }
 }
 
--(void)ternJS:(NSDictionary *)params
-{
-    NSError *error;
-    NSData *outputData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
-    
-    if(!outputData){
-        NSLog(@"JSON ERROR: %@", error);
-    }
-    else {
-        
-        NSURL *URL = [NSURL URLWithString:@"http://127.0.0.1:54782"];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-        [request setHTTPMethod:@"POST"];
-        [request setHTTPBody:outputData];
-        
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        operation.responseSerializer = [AFJSONResponseSerializer serializer];
-        
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-        {
-            NSMenu *theMenu = [[NSMenu alloc] init];
-           
-            [[responseObject objectForKey:@"completions"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-            {
-                NSMenuItem *item = [[NSMenuItem alloc] init];
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[obj objectForKey:@"name"]];
-                
-                [item setAttributedTitle:attrString];
-                [item setAction:@selector(insertSuggestion:)];
-                [item setTarget:self];
-                [item setRepresentedObject:obj];
-                
-                [theMenu insertItem:item atIndex:(unsigned long)idx];
-            }];
-            
-            CodaTextView *tv = [controller focusedTextView:self];
-            
-            NSPoint myPoint = [tv.window.contentView convertPoint:[tv.window convertScreenToBase:[NSEvent mouseLocation]] fromView:nil];
-            
-            NSEvent *fakeMouseEvent = [NSEvent mouseEventWithType:NSLeftMouseDown location:myPoint modifierFlags:0 timestamp:0 windowNumber:[tv.window windowNumber] context:nil eventNumber:0 clickCount:0 pressure:0];
-            
-            [NSMenu popUpContextMenu:theMenu withEvent:fakeMouseEvent forView:nil];
-        
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error){
-            NSLog(@"ERROR %@", [error localizedDescription]);
-        }];
-        
-        [operation start];
-    }
-}
-
--(void)insertSuggestion:(id)sender
+-(void)runHTMLBeautifier:(id)sender
 {
     CodaTextView *tv = [controller focusedTextView:self];
     
-	if(tv){
-        NSDictionary *info = (NSDictionary *)[sender representedObject];
-        [tv replaceCharactersInRange:[tv previousWordRange] withString:[info objectForKey:@"name"]];
+	if(tv)
+	{
+        BOOL selection = YES;
+        NSString *code = [tv selectedText];
+		
+		if(!code || [code isEqualToString:@""]){
+			code = [tv string];
+            selection = NO;
+		}
+        
+        HTMLBeautifier *parser = [[HTMLBeautifier alloc] initWithString:code];
+        
+        NSString *response = [parser beautify];
+        
+        if([response isEqualToString:@""]){
+            return;
+        }
+        else {
+            // check for error
+            if([response hasPrefix:@"CodaKitBeautifierError="]){
+                [self showError:[response stringByReplacingOccurrencesOfString:@"CodaKitBeautifierError=" withString:@""]];
+                return;
+            }
+        }
+        
+        if(selection){
+            [tv replaceCharactersInRange:[tv selectedRange] withString:response];
+        }
+        else {
+            [tv replaceCharactersInRange:NSMakeRange(0, tv.string.length) withString:response];
+        }
     }
 }
 
@@ -325,8 +329,8 @@
                 }
             }
             else {
-                start = range.location - 1;
-                end = range.length+1;
+                start = range.location - [[tv lineEnding] length];
+                end = range.length+[[tv lineEnding] length];
             }
             
             [tv setSelectedRange:NSMakeRange(start, end)];
@@ -350,9 +354,11 @@
 		}
         else {
             NSString *lineContent = [tv stringWithRange:[tv rangeOfCurrentLine]];
-            
+
             [tv setSelectedRange:NSMakeRange(tv.rangeOfCurrentLine.location+tv.rangeOfCurrentLine.length, 0)];
-            [tv insertText:[NSString stringWithFormat:@"\n%@", lineContent]];
+            
+            NSString *copiedContent = [NSString stringWithFormat:@"%@%@", [tv lineEnding], lineContent];
+            [tv insertText:copiedContent];
         }
 	}
 }

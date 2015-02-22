@@ -7,16 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4F89B609B71241E992C0576D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EFAE6C2A1545BFADF7C1D1 /* libPods.a */; };
+		BB92B5501A9A056300B087F0 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = BB92B54F1A9A056300B087F0 /* RegExCategories.m */; };
+		BB9C455F191F80B2006B5502 /* JSHint.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9C455D191F80B2006B5502 /* JSHint.m */; };
+		BB9C4560191F80B2006B5502 /* JSHint.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB9C455E191F80B2006B5502 /* JSHint.xib */; };
+		BB9C45661920F1B3006B5502 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9C45651920F1B3006B5502 /* XMLReader.m */; };
 		BBA712AB1802A016001A3153 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA712AA1802A016001A3153 /* Cocoa.framework */; };
 		BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBA712B31802A016001A3153 /* InfoPlist.strings */; };
 		BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA712BD1802A03E001A3153 /* CodaKit.m */; };
+		BBD06F41191CDDE700F0A434 /* CKPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD06F40191CDDE700F0A434 /* CKPreferences.xib */; };
+		BBD06F47191CDEB100F0A434 /* CKPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD06F46191CDEB100F0A434 /* CKPreferences.m */; };
+		BBE9991A19235E9800AC0145 /* HTMLBeautifier.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE9991919235E9800AC0145 /* HTMLBeautifier.m */; };
+		BBE9991C19235F4600AC0145 /* 3rd in Resources */ = {isa = PBXBuildFile; fileRef = BBE9991B19235F4600AC0145 /* 3rd */; };
 		BBF422CC18057877006A4474 /* CodaKit.codaplugin in Resources */ = {isa = PBXBuildFile; fileRef = BBF422CB18057877006A4474 /* CodaKit.codaplugin */; };
+		BBFF2863191CF1CF003F990E /* JSHintPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFF2862191CF1CF003F990E /* JSHintPreferencesView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		77EFAE6C2A1545BFADF7C1D1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFAE2451D7D64B028EBD293A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		BB92B54E1A9A056300B087F0 /* RegExCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegExCategories.h; sourceTree = "<group>"; };
+		BB92B54F1A9A056300B087F0 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegExCategories.m; sourceTree = "<group>"; };
+		BB9C455C191F80B2006B5502 /* JSHint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSHint.h; sourceTree = "<group>"; };
+		BB9C455D191F80B2006B5502 /* JSHint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSHint.m; sourceTree = "<group>"; };
+		BB9C455E191F80B2006B5502 /* JSHint.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSHint.xib; sourceTree = "<group>"; };
+		BB9C45641920F1B3006B5502 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		BB9C45651920F1B3006B5502 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		BBA712A71802A016001A3153 /* CodaKit.codaplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodaKit.codaplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA712AA1802A016001A3153 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BBA712AD1802A016001A3153 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -28,7 +41,15 @@
 		BBA712BC1802A03E001A3153 /* CodaKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodaKit.h; sourceTree = "<group>"; };
 		BBA712BD1802A03E001A3153 /* CodaKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodaKit.m; sourceTree = "<group>"; };
 		BBA712BF1802A060001A3153 /* CodaPlugInsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodaPlugInsController.h; sourceTree = "<group>"; };
+		BBD06F40191CDDE700F0A434 /* CKPreferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CKPreferences.xib; sourceTree = "<group>"; };
+		BBD06F45191CDEB100F0A434 /* CKPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKPreferences.h; sourceTree = "<group>"; };
+		BBD06F46191CDEB100F0A434 /* CKPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKPreferences.m; sourceTree = "<group>"; };
+		BBE9991819235E9800AC0145 /* HTMLBeautifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLBeautifier.h; sourceTree = "<group>"; };
+		BBE9991919235E9800AC0145 /* HTMLBeautifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLBeautifier.m; sourceTree = "<group>"; };
+		BBE9991B19235F4600AC0145 /* 3rd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 3rd; sourceTree = "<group>"; };
 		BBF422CB18057877006A4474 /* CodaKit.codaplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CodaKit.codaplugin; sourceTree = "<group>"; };
+		BBFF2861191CF1CF003F990E /* JSHintPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSHintPreferencesView.h; sourceTree = "<group>"; };
+		BBFF2862191CF1CF003F990E /* JSHintPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSHintPreferencesView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +58,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBA712AB1802A016001A3153 /* Cocoa.framework in Frameworks */,
-				4F89B609B71241E992C0576D /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,7 +71,6 @@
 				BBA712A91802A016001A3153 /* Frameworks */,
 				BBA712A81802A016001A3153 /* Products */,
 				BBF422CA18057877006A4474 /* Plugin */,
-				AFAE2451D7D64B028EBD293A /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,7 +87,6 @@
 			children = (
 				BBA712AA1802A016001A3153 /* Cocoa.framework */,
 				BBA712AC1802A016001A3153 /* Other Frameworks */,
-				77EFAE6C2A1545BFADF7C1D1 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -86,9 +104,24 @@
 		BBA712B01802A016001A3153 /* CodaKit */ = {
 			isa = PBXGroup;
 			children = (
+				BBE9991B19235F4600AC0145 /* 3rd */,
+				BBA712BF1802A060001A3153 /* CodaPlugInsController.h */,
 				BBA712BC1802A03E001A3153 /* CodaKit.h */,
 				BBA712BD1802A03E001A3153 /* CodaKit.m */,
-				BBA712BF1802A060001A3153 /* CodaPlugInsController.h */,
+				BBFF2861191CF1CF003F990E /* JSHintPreferencesView.h */,
+				BBFF2862191CF1CF003F990E /* JSHintPreferencesView.m */,
+				BB92B54E1A9A056300B087F0 /* RegExCategories.h */,
+				BB92B54F1A9A056300B087F0 /* RegExCategories.m */,
+				BBD06F45191CDEB100F0A434 /* CKPreferences.h */,
+				BBD06F46191CDEB100F0A434 /* CKPreferences.m */,
+				BBD06F40191CDDE700F0A434 /* CKPreferences.xib */,
+				BB9C455C191F80B2006B5502 /* JSHint.h */,
+				BB9C455D191F80B2006B5502 /* JSHint.m */,
+				BB9C455E191F80B2006B5502 /* JSHint.xib */,
+				BBE9991819235E9800AC0145 /* HTMLBeautifier.h */,
+				BBE9991919235E9800AC0145 /* HTMLBeautifier.m */,
+				BB9C45641920F1B3006B5502 /* XMLReader.h */,
+				BB9C45651920F1B3006B5502 /* XMLReader.m */,
 				BBA712B11802A016001A3153 /* Supporting Files */,
 			);
 			path = CodaKit;
@@ -119,11 +152,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBA712B91802A016001A3153 /* Build configuration list for PBXNativeTarget "CodaKit" */;
 			buildPhases = (
-				4D91454776F24722BD02EB01 /* Check Pods Manifest.lock */,
 				BBA712A31802A016001A3153 /* Sources */,
 				BBA712A41802A016001A3153 /* Frameworks */,
 				BBA712A51802A016001A3153 /* Resources */,
-				FAE3B8842FF24FE399A4AB99 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -166,49 +197,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBA712B51802A016001A3153 /* InfoPlist.strings in Resources */,
+				BBD06F41191CDDE700F0A434 /* CKPreferences.xib in Resources */,
 				BBF422CC18057877006A4474 /* CodaKit.codaplugin in Resources */,
+				BB9C4560191F80B2006B5502 /* JSHint.xib in Resources */,
+				BBE9991C19235F4600AC0145 /* 3rd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		4D91454776F24722BD02EB01 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-		};
-		FAE3B8842FF24FE399A4AB99 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BBA712A31802A016001A3153 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB92B5501A9A056300B087F0 /* RegExCategories.m in Sources */,
+				BBFF2863191CF1CF003F990E /* JSHintPreferencesView.m in Sources */,
+				BBD06F47191CDEB100F0A434 /* CKPreferences.m in Sources */,
 				BBA712BE1802A03E001A3153 /* CodaKit.m in Sources */,
+				BB9C45661920F1B3006B5502 /* XMLReader.m in Sources */,
+				BBE9991A19235E9800AC0145 /* HTMLBeautifier.m in Sources */,
+				BB9C455F191F80B2006B5502 /* JSHint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +303,6 @@
 		};
 		BBA712BA1802A016001A3153 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AFAE2451D7D64B028EBD293A /* Pods.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -311,7 +319,6 @@
 		};
 		BBA712BB1802A016001A3153 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AFAE2451D7D64B028EBD293A /* Pods.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
