@@ -80,18 +80,18 @@
 
 -(void)textViewWillSave:(CodaTextView*)textView
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self compileDustJS:nil];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self compileDustJS:nil];
+//    });
 }
 
 -(void)compileDustJS:(id)sender
 {
-    CodaTextView *tv = [controller focusedTextView:self];
+    CodaTextView *tv = [controller focusedTextView];
     
 	if(tv)
 	{
-        NSString *confFile = [NSString stringWithFormat:@"%@/%@", [tv siteLocalPath], @"dust.conf"];
+        NSString *confFile = [NSString stringWithFormat:@"%@/%@", [controller siteLocalPath], @"dust.conf"];
         
         if([[NSFileManager defaultManager] fileExistsAtPath:confFile isDirectory:NO])
         {
@@ -106,8 +106,8 @@
             NSString *fileName;
             NSString *compilePath;
             
-            NSString *compileDir = [NSString stringWithFormat:@"%@%@", [tv siteLocalPath], [config objectForKey:@"compileDir"]];
-            NSString *templateDir = [NSString stringWithFormat:@"%@%@", [tv siteLocalPath], [config objectForKey:@"templateDir"]];
+            NSString *compileDir = [NSString stringWithFormat:@"%@%@", [controller siteLocalPath], [config objectForKey:@"compileDir"]];
+            NSString *templateDir = [NSString stringWithFormat:@"%@%@", [controller siteLocalPath], [config objectForKey:@"templateDir"]];
             
             if([[config objectForKey:@"preserveDirectoryStructure"] boolValue] == YES)
             {
@@ -170,7 +170,7 @@
 
 -(void)goToLine:(NSDictionary *)data
 {
-    CodaTextView *tv = [controller focusedTextView:self];
+    CodaTextView *tv = [controller focusedTextView];
     
     if(tv){
         [tv goToLine:[[data objectForKey:@"line"] intValue] column:[[data objectForKey:@"char"] intValue]];
@@ -179,7 +179,7 @@
 
 -(void)runJSHint:(id)sender
 {
-    CodaTextView *tv = [controller focusedTextView:self];
+    CodaTextView *tv = [controller focusedTextView];
     
 	if(tv)
 	{
@@ -197,7 +197,7 @@
 
 -(void)runHTMLBeautifier:(id)sender
 {
-    CodaTextView *tv = [controller focusedTextView:self];
+    CodaTextView *tv = [controller focusedTextView];
     
 	if(tv)
 	{
@@ -235,7 +235,7 @@
 
 -(void)toUpperCase:(id)sender
 {
-	CodaTextView *tv = [controller focusedTextView:self];
+	CodaTextView *tv = [controller focusedTextView];
     
 	if(tv)
 	{
@@ -252,7 +252,7 @@
 
 -(void)toLowerCase:(id)sender
 {
-	CodaTextView *tv = [controller focusedTextView:self];
+	CodaTextView *tv = [controller focusedTextView];
 	
     if(tv)
 	{
@@ -270,7 +270,7 @@
 
 -(void)quoteFixer:(id)sender
 {
-	CodaTextView *tv = [controller focusedTextView:self];
+	CodaTextView *tv = [controller focusedTextView];
 	
     if(tv)
 	{
@@ -290,7 +290,7 @@
 
 -(void)wrapWithTag:(id)sender
 {
-    CodaTextView *tv = [controller focusedTextView:self];
+    CodaTextView *tv = [controller focusedTextView];
 	
     if(tv)
 	{
@@ -305,7 +305,7 @@
 
 -(void)deleteSelection:(id)sender
 {
-    CodaTextView *tv = [controller focusedTextView:self];
+    CodaTextView *tv = [controller focusedTextView];
 	
     if(tv)
 	{
@@ -341,7 +341,7 @@
 
 -(void)duplicateSelection:(id)sender
 {
-    CodaTextView *tv = [controller focusedTextView:self];
+    CodaTextView *tv = [controller focusedTextView];
 	
     if(tv)
 	{
@@ -365,7 +365,7 @@
 
 -(void)newLine:(id)sender
 {
-	CodaTextView *tv = [controller focusedTextView:self];
+	CodaTextView *tv = [controller focusedTextView];
     
 	if(tv){
 		[tv insertText:@"<br />"];
@@ -376,13 +376,13 @@
 {
 	BOOL result = YES;
     
-	if([controller focusedTextView:self] == nil){
+	if([controller focusedTextView] == nil){
         result = NO;
     }
     else {
         if([aMenuItem action] == @selector(quoteFixer:) || [aMenuItem action] == @selector(toUpperCase:) || [aMenuItem action] == @selector(toLowerCase:) || [aMenuItem action] == @selector(wrapWithTag:))
         {
-            if([[controller focusedTextView:self] selectedText] == nil || [[[controller focusedTextView:self] selectedText] isEqualToString:@""]){
+            if([[controller focusedTextView] selectedText] == nil || [[[controller focusedTextView] selectedText] isEqualToString:@""]){
                 result = NO;
             }
         }
